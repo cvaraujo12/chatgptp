@@ -18,17 +18,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18
-          cache: 'npm'
 
       - name: Criar Projeto Next.js com TypeScript e Tailwind CSS
         run: |
           npx create-next-app@latest . --typescript --tailwind --eslint --app --use-npm
           npm install @headlessui/react @heroicons/react react-hook-form zod redux react-redux @reduxjs/toolkit redux-persist
 
+      - name: Gerar package-lock.json
+        run: npm install
+
       - name: Configurar Git e Fazer Commit Inicial
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
-          git commit -m "Initialize Next.js project with TypeScript and Tailwind CSS"
+          git commit -m "Initialize Next.js project with dependencies"
           git push
