@@ -1,0 +1,34 @@
+name: Initialize Next.js Project
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  setup-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repositório
+        uses: actions/checkout@v3
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Criar Projeto Next.js com TypeScript e Tailwind CSS
+        run: |
+          npx create-next-app@latest . --typescript --tailwind --eslint --app --use-npm
+          npm install @headlessui/react @heroicons/react react-hook-form zod redux react-redux @reduxjs/toolkit redux-persist
+
+      - name: Configurar Git e Fazer Commit Inicial
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Initialize Next.js project with TypeScript and Tailwind CSS"
+          git push
