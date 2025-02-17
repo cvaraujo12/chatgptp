@@ -19,9 +19,12 @@ jobs:
         with:
           node-version: 18
 
+      - name: Remover Arquivos Antigos (Manter .github/)
+        run: |
+          find . -mindepth 1 ! -regex '^./.github\(/.*\)?' -delete
+
       - name: Criar Projeto Next.js (Forçar Sobrescrita)
         run: |
-          rm -rf !( ".github" ) # Remove tudo, exceto a pasta .github
           npx create-next-app@latest . --typescript --tailwind --eslint --app --use-npm --force
           npm install @headlessui/react @heroicons/react react-hook-form zod redux react-redux @reduxjs/toolkit redux-persist
 
